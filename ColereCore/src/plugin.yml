@@ -1,0 +1,10 @@
+name: ColereCore
+author: Enderiatus
+version: 0.01
+main: me.Enderiatus.ColereCore.Main
+depend: [MythicMobs]
+api-version: 1.13
+
+commands:
+  ci:
+    description: Admin custom item command executor.
