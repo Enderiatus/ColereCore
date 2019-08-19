@@ -18,6 +18,7 @@ import me.Enderiatus.ColereCore.Events.PProcessingInvClose;
 import me.Enderiatus.ColereCore.Events.PStatuInvClick;
 import me.Enderiatus.ColereCore.Items.CustomItemManager;
 import me.Enderiatus.ColereCore.Jobs.Events.FarmerFarmEvent;
+import me.Enderiatus.ColereCore.Jobs.Events.FisherFishEvent;
 import me.Enderiatus.ColereCore.Jobs.Events.LumberjackWoodEvent;
 import me.Enderiatus.ColereCore.Jobs.Events.MMDeath;
 import me.Enderiatus.ColereCore.Minigame.TempleEvent.MMSpawn;
@@ -64,6 +65,7 @@ public class Main extends JavaPlugin{
 		Bukkit.getServer().getPluginManager().registerEvents(new MMDeath(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new LumberjackWoodEvent(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new FarmerFarmEvent(this), this);
+		Bukkit.getServer().getPluginManager().registerEvents(new FisherFishEvent(this), this);
 	//	Bukkit.getServer().getPluginManager().registerEvents(new CustomMobSpawn(this), this);
 	}
 
