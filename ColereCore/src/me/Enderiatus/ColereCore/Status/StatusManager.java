@@ -17,7 +17,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import me.Enderiatus.ColereCore.Main;
 import me.Enderiatus.ColereCore.Utils.ItemCreator;
 
-public class StatuManager {
+public class StatusManager {
 
 	public static HashMap<Player, PlayerStatus> PLAYER_STATUS = new HashMap<Player, PlayerStatus>();
 	public static HashMap<Integer, Status> STATUS = new HashMap<Integer, Status>();

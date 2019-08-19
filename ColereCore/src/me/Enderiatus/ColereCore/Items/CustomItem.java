@@ -1,6 +1,6 @@
 package me.Enderiatus.ColereCore.Items;
 
-import java.util.List;
+/*import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -11,11 +11,11 @@ import org.bukkit.enchantments.EnchantmentWrapper;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;*/
 
 public class CustomItem {
 	
-	private ItemStack itemStack;
+/*	private ItemStack itemStack;
 
 	public CustomItem(String itemName, String itemType, List<String> itemLore, List<String> itemEnchants, List<String> itemOthers) {
 		itemStack = new ItemStack(Material.getMaterial(itemType));
@@ -57,5 +57,5 @@ public class CustomItem {
 	
 	public ItemStack getItem() {
 		return itemStack;
-	}
+	}*/
 }

@@ -14,7 +14,7 @@ import me.Enderiatus.ColereCore.Main;
 import me.Enderiatus.ColereCore.Jobs.Jobs;
 import me.Enderiatus.ColereCore.Processing.RefineBlockType;
 import me.Enderiatus.ColereCore.Status.PlayerStatus;
-import me.Enderiatus.ColereCore.Status.StatuManager;
+import me.Enderiatus.ColereCore.Status.StatusManager;
 
 public class PBlockBreak implements Listener {
 	
@@ -31,10 +31,9 @@ public class PBlockBreak implements Listener {
 		Player p = e.getPlayer();
 		if(!(p.getGameMode() == GameMode.SURVIVAL)) 
 			return;
-		PlayerStatus pS = StatuManager.PLAYER_STATUS.get(p);
+		PlayerStatus pS = StatusManager.PLAYER_STATUS.get(p);
 		if(pS.getPlayerJob() == Jobs.MINER) {
-			pS.setJobsXP(pS.getJobsXP()+(Jobs.getJobBlockMultiplier(e.getBlock().getType())*pS.getJobsLevel()));
-			Jobs.checkLevelUP(p);
+			Jobs.addJobLevelXP(p, Jobs.getJobBlockMultiplier(e.getBlock().getType()));
 		}
 		if(!RefineBlockType.contains(e.getBlock().getType().toString()))
 			return; 
@@ -44,7 +43,10 @@ public class PBlockBreak implements Listener {
 		if(p.getInventory().getItemInMainHand().containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
 			dropItemAmount += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS)-1;
 		}if(pS.getPlayerJob() == Jobs.MINER) {
-			dropItemAmount +=2;
+			int chanceOfMinerLuck = random.nextInt(100)+1;
+			if(chanceOfMinerLuck <= pS.getJobsLevel()) {
+				dropItemAmount += random.nextInt(5)+1;
+			}
 		}
 		dropItemAmount = random.nextInt(dropItemAmount)+1;
 		int ICIRate = random.nextInt(100)+1;

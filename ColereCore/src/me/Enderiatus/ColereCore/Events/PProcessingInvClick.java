@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 
 import me.Enderiatus.ColereCore.Main;
 import me.Enderiatus.ColereCore.Processing.RefineBlockType;
-import me.Enderiatus.ColereCore.Status.StatuManager;
+import me.Enderiatus.ColereCore.Status.StatusManager;
 
 public class PProcessingInvClick implements Listener {
 
@@ -51,7 +51,7 @@ public class PProcessingInvClick implements Listener {
 			Random randomChance = new Random();
 			ItemStack refineItem = RefineBlockType.refineMaterialType(e.getClickedInventory().getItem(10).getItemMeta().getDisplayName());
 			ItemStack willRefine = e.getClickedInventory().getItem(10);
-			int playerChance = StatuManager.PLAYER_STATUS.get(p).getProcessingRate();
+			int playerChance = StatusManager.PLAYER_STATUS.get(p).getProcessingRate();
 			for (int i = 0; i < willRefine.getAmount(); i++) {
 				int chance = randomChance.nextInt(100)+1;
 				if(chance <= playerChance) {
@@ -66,7 +66,7 @@ public class PProcessingInvClick implements Listener {
 			p.sendMessage("     §8» §aÝþlenen cevher: "+willRefine.getItemMeta().getDisplayName());
 			p.sendMessage("     §8» §aÝþlenen cevher miktarý: §e"+willRefine.getAmount());
 			p.sendMessage("     §8» §aBaþarýyla iþlenen cevher: §e"+refineItem.getAmount());
-			p.sendMessage("     §8» §aMevcut iþleme seviyeniz: §e"+ StatuManager.PLAYER_STATUS.get(p).getProcessingRate()+"%");
+			p.sendMessage("     §8» §aMevcut iþleme seviyeniz: §e"+ StatusManager.PLAYER_STATUS.get(p).getProcessingRate()+"%");
 			p.sendMessage("     §8» §aOrtalama baþarý þansý: §e~" +succesRate+"%");
 			p.sendMessage("");
 			p.updateInventory();

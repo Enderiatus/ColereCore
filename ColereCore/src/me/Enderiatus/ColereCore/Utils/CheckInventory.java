@@ -11,7 +11,8 @@ public class CheckInventory {
 		for(ItemStack loopItem : player.getInventory().getStorageContents()) {
 			if(loopItem == null) {
 				return true;
-			}else if(loopItem.getItemMeta().getDisplayName().equals(item.getItemMeta().getDisplayName()) && loopItem.getType().equals(item.getType())) {
+			}else if(loopItem.getItemMeta().getDisplayName().equals(item.getItemMeta().getDisplayName()) 
+					&& loopItem.getType().equals(item.getType())) {
 				if((loopItem.getAmount()+item.getAmount()) <= loopItem.getMaxStackSize()) {
 					return true;
 				}else {

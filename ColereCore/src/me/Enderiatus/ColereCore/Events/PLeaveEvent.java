@@ -5,7 +5,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import me.Enderiatus.ColereCore.Main;
-import me.Enderiatus.ColereCore.Status.StatuManager;
+import me.Enderiatus.ColereCore.Status.StatusManager;
 
 public class PLeaveEvent implements Listener {
 	
@@ -16,8 +16,8 @@ public class PLeaveEvent implements Listener {
 	
 	@EventHandler
 	public void playerLeave(PlayerQuitEvent e) {
-		StatuManager.savePlayerFile(e.getPlayer());
-		StatuManager.PLAYER_STATUS.remove(e.getPlayer());
+		StatusManager.savePlayerFile(e.getPlayer());
+		StatusManager.PLAYER_STATUS.remove(e.getPlayer());
 	}
 	
 }

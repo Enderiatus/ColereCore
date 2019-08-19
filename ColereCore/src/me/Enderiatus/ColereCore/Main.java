@@ -8,7 +8,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.Enderiatus.ColereCore.Commands.CustomItemCommand;
+import me.Enderiatus.ColereCore.Commands.JobsCommand;
 import me.Enderiatus.ColereCore.Events.PBlockBreak;
 import me.Enderiatus.ColereCore.Events.PDamage;
 import me.Enderiatus.ColereCore.Events.PJoinEvent;
@@ -17,14 +17,18 @@ import me.Enderiatus.ColereCore.Events.PProcessingInvClick;
 import me.Enderiatus.ColereCore.Events.PProcessingInvClose;
 import me.Enderiatus.ColereCore.Events.PStatuInvClick;
 import me.Enderiatus.ColereCore.Items.CustomItemManager;
-import me.Enderiatus.ColereCore.Jobs.Events.MMSpawn;
+import me.Enderiatus.ColereCore.Jobs.Events.FarmerFarmEvent;
+import me.Enderiatus.ColereCore.Jobs.Events.LumberjackWoodEvent;
+import me.Enderiatus.ColereCore.Jobs.Events.MMDeath;
+import me.Enderiatus.ColereCore.Minigame.TempleEvent.MMSpawn;
 import me.Enderiatus.ColereCore.Minigame.TempleEvent.TempleEvent;
-import me.Enderiatus.ColereCore.Status.StatuManager;
+import me.Enderiatus.ColereCore.Mobs.CustomMobManager;
+import me.Enderiatus.ColereCore.Status.StatusManager;
 
 public class Main extends JavaPlugin{
 	
-	private File fishDropFile, itemFile;
-	private FileConfiguration fishConfig, itemConfig;
+	private File mobFile, itemFile;
+	private FileConfiguration mobConfig, itemConfig;
 	
 	private static Main instance;
 	
@@ -34,10 +38,10 @@ public class Main extends JavaPlugin{
 		checkFiles();
 		registerEvents();
 		TempleEvent.startTempleTimer();
-		StatuManager.loadStatus();
-		CustomItemManager.loadCustomItems();
-	//	CustomMobManager.loadAllMobs();
-		getCommand("ci").setExecutor(new CustomItemCommand(this));
+		StatusManager.loadStatus();
+		CustomItemManager.loadAllItems();;
+		CustomMobManager.loadAllMobs();
+		getCommand("meslek").setExecutor(new JobsCommand(this));
 	}
 
 	public static Main getInstance() {
@@ -57,7 +61,9 @@ public class Main extends JavaPlugin{
 		Bukkit.getServer().getPluginManager().registerEvents(new PProcessingInvClose(this), this);
 		
 		Bukkit.getServer().getPluginManager().registerEvents(new MMSpawn(this), this);
-		
+		Bukkit.getServer().getPluginManager().registerEvents(new MMDeath(this), this);
+		Bukkit.getServer().getPluginManager().registerEvents(new LumberjackWoodEvent(this), this);
+		Bukkit.getServer().getPluginManager().registerEvents(new FarmerFarmEvent(this), this);
 	//	Bukkit.getServer().getPluginManager().registerEvents(new CustomMobSpawn(this), this);
 	}
 
@@ -69,23 +75,19 @@ public class Main extends JavaPlugin{
 				getDataFolder().mkdirs();
 			}
 			File playerData = new File(getDataFolder()+"/playerData");
-			fishDropFile = new File(getDataFolder(), "fishingDrops.yml");
-	//		mobFile = new File(getDataFolder(), "mobConfig.yml");
+			mobFile = new File(getDataFolder(), "mobConfig.yml");
 			itemFile = new File(getDataFolder(), "itemList.yml");
 			if(!playerData.exists()) {
 				playerData.mkdirs();
-			}if(!fishDropFile.exists()) {
-				fishDropFile.createNewFile();
-			}/*if(!mobFile.exists()) {
+			}if(!mobFile.exists()) {
 				mobFile.createNewFile();
-			}*/if(!itemFile.exists()) {
+			}if(!itemFile.exists()) {
 				itemFile.createNewFile();
 			}
 		} catch (IOException e) {
 			getLogger().warning("[Colere Klan] Dosyalar olusturulurken bir hata olustu!" + e);
 		}
-		fishConfig = YamlConfiguration.loadConfiguration(fishDropFile);
-	//	mobConfig = YamlConfiguration.loadConfiguration(mobFile);
+		mobConfig = YamlConfiguration.loadConfiguration(mobFile);
 		itemConfig = YamlConfiguration.loadConfiguration(itemFile);
 	}
 
@@ -93,20 +95,12 @@ public class Main extends JavaPlugin{
 	
 	
 	
-/*	public FileConfiguration getMobConfig() {
+	public FileConfiguration getMobConfig() {
 		return mobConfig;
 	}
 
 	public void setMobConfig(FileConfiguration mobConfig) {
 		this.mobConfig = mobConfig;
-	}*/
-
-	public FileConfiguration getFishConfig() {
-		return fishConfig;
-	}
-
-	public void setFishConfig(FileConfiguration fishConfig) {
-		this.fishConfig = fishConfig;
 	}
 
 	public FileConfiguration getItemConfig() {

@@ -15,7 +15,7 @@ public class FisherFishEvent implements Listener {
 	
 	@EventHandler
 	public void catchFish(PlayerFishEvent e) {
-
+		
 	}
 
 }

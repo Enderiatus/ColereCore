@@ -5,7 +5,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import me.Enderiatus.ColereCore.Main;
-import me.Enderiatus.ColereCore.Status.StatuManager;
+import me.Enderiatus.ColereCore.Status.StatusManager;
 
 public class PJoinEvent implements Listener{
 	
@@ -16,7 +16,7 @@ public class PJoinEvent implements Listener{
 	
 	@EventHandler
 	public void playerJoin(PlayerJoinEvent e) {
-		StatuManager.checkPlayerFile(e.getPlayer());
+		StatusManager.checkPlayerFile(e.getPlayer());
 	}
 
 }

@@ -1,17 +1,46 @@
 package me.Enderiatus.ColereCore.Items;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
-import org.bukkit.Color;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
+import io.lumine.xikage.mythicmobs.MythicMobs;
 import me.Enderiatus.ColereCore.Main;
 
 public class CustomItemManager {
 
-	public static HashMap<String, CustomItem> customItems = new HashMap<String, CustomItem>();
+	public static HashMap<String, ArrayList<ItemStack>> customItems = new HashMap<String, ArrayList<ItemStack>>();
 	
-	public static void loadCustomItems() {
+	public static void loadAllItems() {
+		FileConfiguration itemConfig = Main.getInstance().getItemConfig();
+		for(String jobs : itemConfig.getConfigurationSection("Items").getKeys(false)) {
+			Bukkit.getLogger().info("Jobs: "+ jobs);
+			ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+			for(String itemID : itemConfig.getStringList("Items."+jobs)) {
+				Bukkit.getLogger().info("Item ID: "+ itemID);
+				ItemStack item = MythicMobs.inst().getItemManager().getItemStack(itemID);
+				items.add(item);
+				Bukkit.getLogger().info("Meraba ekledim: "+ item);
+			}
+			customItems.put(jobs, items);
+		}
+	}
+
+	public static void dropCustomItem(String jobs, Player player) {
+		int random = new Random().nextInt(CustomItemManager.customItems.get(jobs).size());
+		ItemStack customItem = CustomItemManager.customItems.get(jobs).get(random);
+		player.getLocation().getWorld().dropItem(player.getLocation(), customItem);
+		player.sendMessage("§cMeslek ödülü olarak ekstra eþya kazandýnýz.. §7("+customItem.getItemMeta().getDisplayName()+"§7)");
+		
+	}
+	
+	
+/*	public static void loadCustomItems() {
 		FileConfiguration itemConfig = Main.getInstance().getItemConfig();
 		if(!itemConfig.isConfigurationSection("Items")) {
 			return;
@@ -32,6 +61,6 @@ public class CustomItemManager {
 		int g = (hex & 0xFF00) >> 8;
 		int b = (hex & 0xFF);
 		return Color.fromBGR(r, g, b);
-	}
+	} */
 
 }

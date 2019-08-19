@@ -1,11 +1,11 @@
-package me.Enderiatus.ColereCore.Jobs.Events;
+package me.Enderiatus.ColereCore.Minigame.TempleEvent;
 
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobSpawnEvent;
 import me.Enderiatus.ColereCore.Main;
+import me.Enderiatus.ColereCore.Mobs.CustomMobManager;
 
 public class MMSpawn implements Listener{
 	
@@ -16,7 +16,10 @@ public class MMSpawn implements Listener{
 	
 	@EventHandler
 	public void mmMobLoot(MythicMobSpawnEvent e) {
-		Bukkit.getServer().broadcastMessage("spawnlanan mob tipi: "+e.getMobType().getEntityType().toString());
+		if(CustomMobManager.customMobs.contains(e.getMobType())) {
+			if(TempleEvent.templeStatus == TempleStatus.STOP) 
+				e.getEntity().remove();
+		}
 	}
 
 }
