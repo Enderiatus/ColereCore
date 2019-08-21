@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -16,16 +15,14 @@ public class CustomItemManager {
 
 	public static HashMap<String, ArrayList<ItemStack>> customItems = new HashMap<String, ArrayList<ItemStack>>();
 	
+	
 	public static void loadAllItems() {
 		FileConfiguration itemConfig = Main.getInstance().getItemConfig();
 		for(String jobs : itemConfig.getConfigurationSection("Items").getKeys(false)) {
-			Bukkit.getLogger().info("Jobs: "+ jobs);
 			ArrayList<ItemStack> items = new ArrayList<ItemStack>();
 			for(String itemID : itemConfig.getStringList("Items."+jobs)) {
-				Bukkit.getLogger().info("Item ID: "+ itemID);
 				ItemStack item = MythicMobs.inst().getItemManager().getItemStack(itemID);
 				items.add(item);
-				Bukkit.getLogger().info("Meraba ekledim: "+ item);
 			}
 			customItems.put(jobs, items);
 		}
@@ -35,9 +32,11 @@ public class CustomItemManager {
 		int random = new Random().nextInt(CustomItemManager.customItems.get(jobs).size());
 		ItemStack customItem = CustomItemManager.customItems.get(jobs).get(random);
 		player.getLocation().getWorld().dropItem(player.getLocation(), customItem);
-		player.sendMessage("§cMeslek ödülü olarak ekstra eþya kazandýnýz.. §7("+customItem.getItemMeta().getDisplayName()+"§7)");
+		player.sendMessage("§cMeslek §7» §eMeslek ödülü olarak ekstra eþya kazandýnýz.. §7("+customItem.getItemMeta().getDisplayName()+"§7)");
 		
 	}
+	
+
 	
 	
 /*	public static void loadCustomItems() {

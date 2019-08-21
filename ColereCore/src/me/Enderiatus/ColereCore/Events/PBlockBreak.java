@@ -44,7 +44,7 @@ public class PBlockBreak implements Listener {
 			dropItemAmount += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS)-1;
 		}if(pS.getPlayerJob() == Jobs.MINER) {
 			int chanceOfMinerLuck = random.nextInt(100)+1;
-			if(chanceOfMinerLuck <= pS.getJobsLevel()) {
+			if(chanceOfMinerLuck <= pS.getJobLevel()) {
 				dropItemAmount += random.nextInt(5)+1;
 			}
 		}
@@ -60,7 +60,6 @@ public class PBlockBreak implements Listener {
 		ItemStack dropItem = RefineBlockType.getRefineBlockunRefinedItem(RefineBlockType.valueOf(e.getBlock().getType().toString()));
 		dropItem.setAmount(dropItemAmount);
 		e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), dropItem);
-//	ProcessingMenu.openProcessingMenu(p);
 	}
 	
 

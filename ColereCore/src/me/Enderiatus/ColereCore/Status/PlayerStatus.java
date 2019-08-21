@@ -239,28 +239,32 @@ public class PlayerStatus {
 	}
 
 
-	public int getJobsLevel() {
+	public int getJobLevel() {
 		return jobsLevel;
 	}
 
 
-	public void setJobsLevel(int jobsLevel) {
+	public void setJobLevel(int jobsLevel) {
 		this.jobsLevel = jobsLevel;
 	}
 
 
-	public int getJobsXP() {
+	public int getJobXP() {
 		return jobsXP;
 	}
 
 
-	public void setJobsXP(int jobsXP) {
+	public void setJobXP(int jobsXP) {
 		this.jobsXP = jobsXP;
 	}
 
 
 	public Jobs getPlayerJob() {
 		return playerJob;
+	}
+	
+	public void setPlayerJob(Jobs playerJob) {
+		this.playerJob = playerJob;
 	}
 
 }

@@ -27,7 +27,7 @@ public class FarmerFarmEvent implements Listener{
 				return;
 			Jobs.addJobLevelXP(e.getPlayer(), 8);
 			int chanceOfItem = new Random().nextInt(1000)+1;
-			if(chanceOfItem > StatusManager.PLAYER_STATUS.get(e.getPlayer()).getJobsLevel()) 
+			if(chanceOfItem > StatusManager.PLAYER_STATUS.get(e.getPlayer()).getJobLevel()) 
 				return;
 			CustomItemManager.dropCustomItem("Farmer", e.getPlayer());
 		}

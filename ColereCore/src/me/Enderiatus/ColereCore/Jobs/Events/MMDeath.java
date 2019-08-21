@@ -36,7 +36,7 @@ public class MMDeath implements Listener {
 		if(e.getMobType().getDrops().size() < 1) 
 			return;
 		int randomChance = new Random().nextInt(1000)+1;
-		if(randomChance <= StatusManager.PLAYER_STATUS.get(e.getKiller()).getJobsLevel()) {
+		if(randomChance <= StatusManager.PLAYER_STATUS.get(e.getKiller()).getJobLevel()) {
 			Optional<DropTable> maybeDrops = MythicMobs.inst().getDropManager().getDropTable(e.getMobType().getDrops()
 					.get(new Random().nextInt(e.getMobType().getDrops().size())+1));
 			if(maybeDrops.isPresent()) {

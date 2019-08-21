@@ -25,5 +25,37 @@ public class CheckInventory {
 		}
 		return false;
 	}
+	
+	public static boolean hasItem(Player p, ItemStack item) {
+		int totalAmount = 0;
+		for(ItemStack loopItem : p.getInventory().getStorageContents()) {
+			if(loopItem != null) {
+				if(loopItem.getItemMeta().equals(item.getItemMeta())) {
+					totalAmount+=loopItem.getAmount();
+				}
+			}	
+		}
+		if(totalAmount >= item.getAmount()) {
+			return true;
+		}
+		return false;
+	}
+	
+	public static void removeItem(Player p, ItemStack item) {
+		int remainingAmount = item.getAmount();
+		for(ItemStack loopItem : p.getInventory().getStorageContents()) {
+			if(loopItem != null) {
+				if(loopItem.getItemMeta().equals(item.getItemMeta())) {
+					if(loopItem.getAmount() <= remainingAmount) {
+						remainingAmount-=loopItem.getAmount();
+						loopItem.setAmount(0);
+					}else if(loopItem.getAmount() > remainingAmount){
+						loopItem.setAmount(loopItem.getAmount()-remainingAmount);
+						return;
+					}
+				}
+			}	
+		}
+	}
 
 }

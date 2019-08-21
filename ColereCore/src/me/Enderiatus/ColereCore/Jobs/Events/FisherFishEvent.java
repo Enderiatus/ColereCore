@@ -26,7 +26,7 @@ public class FisherFishEvent implements Listener {
 		if(!(e.getCaught() instanceof Item)) 
 			return;
 		int randomChance = new Random().nextInt(1000)+1;
-		if(randomChance <= StatusManager.PLAYER_STATUS.get(e.getPlayer()).getJobsLevel()) {
+		if(randomChance <= StatusManager.PLAYER_STATUS.get(e.getPlayer()).getJobLevel()) {
 			CustomItemManager.dropCustomItem("Fisher", e.getPlayer());
 		}
 	}

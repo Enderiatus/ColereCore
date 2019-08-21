@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import me.Enderiatus.ColereCore.Main;
+import me.Enderiatus.ColereCore.Items.CustomPotionManager;
 import me.Enderiatus.ColereCore.Utils.ItemCreator;
 
 public class StatusManager {
@@ -45,7 +46,7 @@ public class StatusManager {
 			
 			@Override
 			public void run() {
-				openStatuInventory(p);
+				CustomPotionManager.openPotionMenu(p);
 				
 			}
 		}, 20*5);
@@ -150,8 +151,8 @@ public class StatusManager {
 			PLAYER_STATUS.get(p).getUserConfigration().set("Statu.Point", PLAYER_STATUS.get(p).getLeftPoint());
 			PLAYER_STATUS.get(p).getUserConfigration().set("Statu.PointXP", PLAYER_STATUS.get(p).getPointXP());
 			PLAYER_STATUS.get(p).getUserConfigration().set("Job.Name", PLAYER_STATUS.get(p).getPlayerJob().toString());
-			PLAYER_STATUS.get(p).getUserConfigration().set("Job.Level", PLAYER_STATUS.get(p).getJobsLevel());
-			PLAYER_STATUS.get(p).getUserConfigration().set("Job.LevelXP", PLAYER_STATUS.get(p).getJobsXP());
+			PLAYER_STATUS.get(p).getUserConfigration().set("Job.Level", PLAYER_STATUS.get(p).getJobLevel());
+			PLAYER_STATUS.get(p).getUserConfigration().set("Job.LevelXP", PLAYER_STATUS.get(p).getJobXP());
 			PLAYER_STATUS.get(p).getUserConfigration().save(PLAYER_STATUS.get(p).getUserFile());
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -1,6 +1,7 @@
 package me.Enderiatus.ColereCore.Jobs;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -16,30 +17,23 @@ public enum Jobs {
 	
 	public static void checkLevelUP(Player p) {
 		PlayerStatus pS = StatusManager.PLAYER_STATUS.get(p);
-		if(pS.getJobsXP() >= getNextLevelXP(pS.getJobsLevel())) {
-			pS.setJobsLevel(pS.getJobsLevel()+1);
-			pS.setJobsXP(0);
-			p.sendMessage("§bMeslek §7» §eMesleðin seviye atladý. Mevcut seviyen: §6"+pS.getJobsLevel());
+		if(pS.getJobXP() >= getNextLevelXP(pS.getJobLevel())) {
+			pS.setJobLevel(pS.getJobLevel()+1);
+			pS.setJobXP(0);
+			p.sendMessage("§bMeslek §7» §eMesleðin seviye atladý. Mevcut seviyen: §6"+pS.getJobLevel());
 		}
 	}
 	
 	public static void addJobLevelXP(Player p, int amountXP) {
 		PlayerStatus pS = StatusManager.PLAYER_STATUS.get(p);
-		if(pS.getJobsLevel() >= 50) 
+		if(pS.getJobLevel() >= 50) 
 			return;
-		pS.setJobsXP(pS.getJobsXP()+(amountXP*pS.getJobsLevel()));
+		pS.setJobXP(pS.getJobXP()+(amountXP*pS.getJobLevel()));
 		checkLevelUP(p);
 	}
 	
 	public static int getNextLevelXP(int currentLevel) {
 		return (int) (Math.pow(5*currentLevel, 3)/2)+(currentLevel*2);
-		/*
-		 * Seviye 1: 251 -10x10 - 100x100x100
-		 * Seviye 10: 10160
-		 * 150+
-		 * Seviye 50: 250 200
-		 * 
-		 */
 	}
 	
 	public static int getJobBlockMultiplier(Material block) {
@@ -207,20 +201,34 @@ public enum Jobs {
 				+ "&&&7Örneðin; madenci mesleðinde &eMadenci Ruhu &7özelliðinin ilk seviyede"
 				+ "&&&7devreye girme þansý &e1%&7'dir. Fakat 50. seviyede bu oran &e10%&7 olur."
 				+ "&&&7Meslekler hakkýnda detaylý bilgi için &eMeslek Listesine &7bakabilirsiniz."
-				+ "&&&&&6&lDaha hýzlý geliþmek için bir meslek seçmeye ne dersin?"));
+				+ "&&&&&6&lDaha hýzlý geliþmek için bir meslek seçmeye ne dersin?"
+				+ "&&&c&lDIKKAAAT! Seçilen mesleði normal olarak deðiþtiremezsiniz."));
 		jobInventory.setItem(1, ItemCreator.createItem(Material.BOOK, (byte)1, "&eMeslek Listesi", 
 				"&&&7Meslek listesini ve özelliklerini görmek için týklayýn."));
 		
 		PlayerStatus pS = StatusManager.PLAYER_STATUS.get(p);
-		jobInventory.setItem(3, ItemCreator.createItem(Jobs.getJobDisplayItem(pS.getPlayerJob()), (byte)1, "&6Meslek: "+Jobs.getJobDisplayName(pS.getPlayerJob()), 
+		jobInventory.setItem(2, ItemCreator.createItem(Jobs.getJobDisplayItem(pS.getPlayerJob()), (byte)1, "&6Meslek: "+Jobs.getJobDisplayName(pS.getPlayerJob()), 
 				Jobs.getJobAbout(pS.getPlayerJob())));
-		jobInventory.setItem(4, ItemCreator.createItem(Material.TOTEM_OF_UNDYING, (byte)1, "&9Meslek Durumunuz", "&&&7Meslek: "+Jobs.getJobDisplayName(pS.getPlayerJob())
-			+"&&  &7Meslek Seviyeniz: &e"+pS.getJobsLevel()
-			+"&&  &7Meslek XP'niz: &e"+pS.getJobsXP()
-			+"&&  &7Sonraki seviye için gerekli XP: &e"+Jobs.getNextLevelXP(pS.getJobsLevel())
+		jobInventory.setItem(3, ItemCreator.createItem(Material.TOTEM_OF_UNDYING, (byte)1, "&9Meslek Durumunuz", "&&&7Meslek: "+Jobs.getJobDisplayName(pS.getPlayerJob())
+			+"&&  &7Meslek Seviyeniz: &e"+pS.getJobLevel()
+			+"&&  &7Meslek XP'niz: &e"+pS.getJobXP()
+			+"&&  &7Sonraki seviye için gerekli XP: &e"+Jobs.getNextLevelXP(pS.getJobLevel())
 			+"&&&&  &6&lMeslek seviyeniz arttýkça özelliklerin þansý artar."));
+		jobInventory.setItem(4, ItemCreator.createItem(Material.STICK, (byte)1, "&4Kapat", "&&&c&lMenüyü kapatýr."));
 		p.openInventory(jobInventory);
 	}
-	
+
+	public static void selectJob(Player player, Jobs j) {
+		PlayerStatus pS = StatusManager.PLAYER_STATUS.get(player);
+		if(!(pS.getPlayerJob() == Jobs.JOBLESS)) {
+			player.sendMessage("§cMeslek §7» §eZaten bir mesleðin var. Mesleklere girildiðinde deðiþtirilemez.");
+			player.sendMessage("§cMeslek §7» §eMesleðinizi deðiþtirmek için §6Meslek Deðiþtirme Kaðýdý §ealabilirsiniz.");
+			return;
+		}
+		pS.setPlayerJob(j);
+		player.sendMessage("§cMeslek §7» §eBaþarý ile "+ChatColor.translateAlternateColorCodes('&', Jobs.getJobDisplayName(j))+" §emesleðine katýldýnýz.");
+		player.sendMessage("§cMeslek §7» §eSeçilen meslek sadece §6Meslek Deðiþtirme Kaðýdý §eile deðiþtirilebilir.");
+		
+	}
 	
 }

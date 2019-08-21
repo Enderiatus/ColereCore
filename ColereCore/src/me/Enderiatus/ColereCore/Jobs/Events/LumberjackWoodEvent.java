@@ -32,7 +32,7 @@ public class LumberjackWoodEvent implements Listener{
 			return;
 		Player p = e.getPlayer();
 		PlayerStatus pS = StatusManager.PLAYER_STATUS.get(p);
-		pS.setJobsXP(pS.getJobsXP()+(3*pS.getJobsLevel()));
+		pS.setJobXP(pS.getJobXP()+(3*pS.getJobLevel()));
 		Jobs.checkLevelUP(p);
 	}
 	
@@ -46,9 +46,9 @@ public class LumberjackWoodEvent implements Listener{
 			return;
 		Player p = e.getPlayer();
 		PlayerStatus pS = StatusManager.PLAYER_STATUS.get(p);
-		if(pS.getJobsXP()+(3*pS.getJobsLevel()) < 1) 
+		if(pS.getJobXP()+(3*pS.getJobLevel()) < 1) 
 			return;
-		pS.setJobsXP(pS.getJobsXP()-(3*pS.getJobsLevel()));
+		pS.setJobXP(pS.getJobXP()-(3*pS.getJobLevel()));
 	}
 	
 	@EventHandler
@@ -58,7 +58,7 @@ public class LumberjackWoodEvent implements Listener{
 		if(!(StatusManager.PLAYER_STATUS.get(e.getPlayer()).getPlayerJob() == Jobs.LUMBERJACK)) 
 			return;
 		int chanceOfItem = new Random().nextInt(1000)+1;
-		if(chanceOfItem > StatusManager.PLAYER_STATUS.get(e.getPlayer()).getJobsLevel()) 
+		if(chanceOfItem > StatusManager.PLAYER_STATUS.get(e.getPlayer()).getJobLevel()) 
 			return;
 		CustomItemManager.dropCustomItem("Lumberjack", e.getPlayer());
 	}
